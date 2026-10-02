@@ -1,0 +1,1487 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Министерство Бесполезности</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Manrope:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: fixed ticker up top; vertical stack of "department" cards, each a self-contained joke; floating chat bubble + looping cookie banner over everything. Single committed dark/neon identity — no light mode, this is a haunted government website. */
+:root{
+  --bg: #15001f;
+  --panel: #1f0330;
+  --panel-2: #280a3d;
+  --fg: #f4ecff;
+  --muted: #b79cd6;
+  --accent: #c6ff3d;
+  --accent-ink: #15001f;
+  --accent2: #ff2fb0;
+  --warn: #ffcf3f;
+  --danger: #ff4d5e;
+  --border: #3a1a54;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body{
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Manrope', system-ui, sans-serif;
+  padding-inline: 0;
+  padding-block: 0;
+  overflow-x: hidden;
+}
+
+h1,h2,h3, .display{
+  font-family: 'Bungee', system-ui, sans-serif;
+  font-weight: 400;
+  text-wrap: balance;
+  letter-spacing: 0.01em;
+}
+
+.mono{ font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+a{ color: var(--accent); }
+
+button{
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+button:focus-visible, input:focus-visible, a:focus-visible{
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- ticker ---------- */
+.ticker-bar{
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 50;
+  background: var(--accent);
+  color: var(--accent-ink);
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 3px solid var(--panel);
+}
+.ticker-track{
+  display: inline-flex;
+  gap: 3rem;
+  padding-block: 0.4rem;
+  animation: ticker 26s linear infinite;
+}
+@keyframes ticker{
+  from{ transform: translateX(0); }
+  to{ transform: translateX(-50%); }
+}
+.ticker-track span{
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+@media (prefers-reduced-motion: reduce){
+  .ticker-track{ animation: none; }
+}
+
+/* ---------- shell ---------- */
+.wrap{
+  max-width: 760px;
+  margin-inline: auto;
+  padding-inline: 20px;
+  padding-block: 2.5rem 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+header.hero{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding-block: 1rem;
+}
+.seal{
+  font-size: 2.4rem;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  width: fit-content;
+  margin-inline: auto;
+}
+header.hero h1{
+  font-size: clamp(1.6rem, 6vw, 2.6rem);
+  margin: 0;
+  color: var(--accent);
+}
+header.hero p{
+  color: var(--muted);
+  max-width: 48ch;
+  margin-inline: auto;
+  line-height: 1.5;
+}
+.stamp{
+  align-self: center;
+  border: 2px dashed var(--danger);
+  color: var(--danger);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  transform: rotate(-3deg);
+}
+
+/* ---------- card / department ---------- */
+.dept{
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+.dept-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.dept-head h2{
+  font-size: 1.05rem;
+  color: var(--fg);
+  margin: 0;
+}
+.dept-id{
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.dept p.lede{
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.btn{
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 800;
+  padding: 0.75rem 1.3rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  transition: transform 0.15s ease;
+}
+.btn:hover{ transform: translateY(-2px); }
+.btn:active{ transform: translateY(0); }
+.btn.secondary{
+  background: transparent;
+  color: var(--fg);
+  border: 1.5px solid var(--border);
+}
+.btn.danger{
+  background: var(--danger);
+  color: #2b0006;
+}
+
+/* counter dept */
+.counter-row{
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.counter-value{
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.6rem;
+  font-weight: 600;
+  min-width: 3ch;
+  font-variant-numeric: tabular-nums;
+}
+.counter-msg{
+  color: var(--accent2);
+  font-size: 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  min-height: 1.2em;
+}
+
+/* fleeing button dept */
+.flee-stage{
+  position: relative;
+  height: 160px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 18px, rgba(255,255,255,0.025) 18px 36px);
+}
+#fleeBtn{
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  transition: top 0.25s ease, left 0.25s ease;
+  white-space: nowrap;
+}
+.flee-caption{
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* loading dept */
+.load-label{
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.load-track{
+  height: 14px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.load-fill{
+  height: 100%;
+  width: 2%;
+  background: linear-gradient(90deg, var(--accent2), var(--accent));
+  border-radius: inherit;
+  transition: width 0.4s ease;
+}
+
+/* subscribe wizard */
+.wizard-step{ display: flex; flex-direction: column; gap: 0.8rem; }
+.field{
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.field label{ font-size: 0.8rem; color: var(--muted); }
+.field input[type="email"]{
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  min-width: 0;
+}
+.check-row{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--fg);
+}
+.captcha-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+.captcha-grid button{
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1.6rem;
+  padding: 0.7rem 0;
+  color: var(--fg);
+}
+.captcha-grid button[aria-pressed="true"]{
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.wizard-foot{ display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.step-dots{
+  display: flex;
+  gap: 0.35rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+/* achievements */
+.ach-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.6rem;
+}
+.ach{
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: var(--panel-2);
+  min-width: 0;
+  opacity: 0.45;
+  filter: grayscale(0.6);
+}
+.ach.unlocked{
+  opacity: 1;
+  filter: none;
+  border-color: var(--accent);
+}
+.ach .ic{ font-size: 1.3rem; }
+.ach .name{ font-size: 0.78rem; font-weight: 600; }
+.ach .desc{ font-size: 0.7rem; color: var(--muted); line-height: 1.3; }
+
+/* footer / end of internet */
+footer.endzone{
+  text-align: center;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  padding-block: 2rem;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* ---------- toasts ---------- */
+#toastHost{
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 56px);
+  right: 14px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: min(320px, calc(100vw - 28px));
+}
+.toast{
+  background: var(--panel-2);
+  border: 1px solid var(--accent);
+  color: var(--fg);
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  animation: toastIn 0.25s ease;
+}
+@keyframes toastIn{
+  from{ transform: translateX(10px); opacity: 0; }
+  to{ transform: translateX(0); opacity: 1; }
+}
+
+/* ---------- cookie banner ---------- */
+#cookieBar{
+  position: fixed;
+  left: 14px;
+  right: 14px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+  z-index: 150;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 520px;
+  margin-inline: auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+#cookieBar p{ margin: 0; font-size: 0.82rem; color: var(--muted); flex: 1 1 200px; min-width: 0; }
+#cookieBar .row{ display: flex; gap: 0.5rem; }
+#cookieBar.hidden-bar{ display: none; }
+
+/* ---------- chat bubble ---------- */
+#chatToggle{
+  position: fixed;
+  right: 18px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+  z-index: 160;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--accent2);
+  color: #2a0018;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+}
+#chatPanel{
+  position: fixed;
+  right: 18px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 84px);
+  z-index: 160;
+  width: min(300px, calc(100vw - 36px));
+  max-height: 60vh;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.5);
+}
+#chatPanel.hidden-bar{ display: none; }
+.chat-head{
+  background: var(--panel-2);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chat-body{
+  padding: 0.7rem 0.9rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-height: 140px;
+}
+.chat-msg{
+  font-size: 0.82rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 10px;
+  max-width: 85%;
+  line-height: 1.4;
+}
+.chat-msg.bot{ background: var(--panel-2); align-self: flex-start; }
+.chat-msg.user{ background: var(--accent); color: var(--accent-ink); align-self: flex-end; }
+.chat-foot{
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.6rem;
+  border-top: 1px solid var(--border);
+}
+.chat-foot input{
+  flex: 1;
+  min-width: 0;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.85rem;
+}
+.chat-foot button{
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* ---------- secret modal ---------- */
+#secretModal{
+  position: fixed;
+  inset: 0;
+  background: rgba(10,0,16,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  padding: 20px;
+}
+#secretModal.show{ display: flex; }
+.secret-card{
+  background: var(--panel);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  padding: 1.6rem;
+  max-width: 360px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* ---------- warning overlay ---------- */
+#warnOverlay{
+  position: fixed;
+  inset: 0;
+  background: #1a0000;
+  color: var(--danger);
+  z-index: 400;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+#warnOverlay.show{ display: flex; }
+.warn-inner{ display: flex; flex-direction: column; gap: 0.9rem; max-width: 420px; }
+.warn-inner .big{ font-size: 2.2rem; }
+@keyframes glitch{
+  0%,100%{ transform: translate(0,0); }
+  20%{ transform: translate(-2px,1px); }
+  40%{ transform: translate(2px,-1px); }
+  60%{ transform: translate(-1px,-1px); }
+  80%{ transform: translate(1px,2px); }
+}
+.glitching{ animation: glitch 0.2s infinite; }
+@media (prefers-reduced-motion: reduce){ .glitching{ animation: none; } }
+
+/* ---------- registration gate ---------- */
+#regGate{
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: radial-gradient(circle at 50% 0%, #2b0a44, var(--bg) 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+#regGate.gate-hidden{ display: none; }
+.gate-card{
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 2rem;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.gate-card h2{ color: var(--accent); font-size: 1.3rem; margin: 0; text-align: center; }
+.gate-card p.lede{ text-align: center; }
+.gate-field{ display: flex; flex-direction: column; gap: 0.35rem; }
+.gate-field label{ font-size: 0.78rem; color: var(--muted); }
+.gate-field input{
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+#regForm{ display: flex; flex-direction: column; gap: 0.8rem; }
+.gate-status{
+  min-height: 1.4em;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--accent2);
+  text-align: center;
+}
+.gate-attempts{
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.falling-letter{
+  position: fixed;
+  z-index: 1100;
+  pointer-events: none;
+  font-weight: 700;
+  will-change: transform, opacity;
+}
+
+/* ---------- diagnostics ---------- */
+.diag-list{
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+}
+.diag-line{ display: flex; justify-content: space-between; gap: 0.6rem; opacity: 0; animation: diagIn 0.25s ease forwards; }
+.diag-line .ok{ color: var(--accent); }
+.diag-line .fail{ color: var(--danger); }
+@keyframes diagIn{ to{ opacity: 1; } }
+
+/* ---------- certificate ---------- */
+.cert-card{
+  border: 3px double var(--accent);
+  border-radius: 10px;
+  padding: 1.4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--panel-2);
+}
+.cert-card .cert-title{ font-family: 'Bungee', sans-serif; color: var(--accent); font-size: 1.2rem; }
+.cert-card .cert-serial{ font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+
+/* ---------- poll ---------- */
+.poll-opts{ display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.poll-opts button{
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+.poll-results{ display: flex; flex-direction: column; gap: 0.4rem; }
+.poll-bar-row{ display: flex; align-items: center; gap: 0.6rem; font-size: 0.8rem; }
+.poll-bar-row .label{ width: 90px; flex-shrink: 0; color: var(--muted); }
+.poll-bar-track{ flex: 1; height: 10px; background: var(--panel-2); border-radius: 999px; overflow: hidden; min-width: 0; }
+.poll-bar-fill{ height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); display: block; }
+.poll-bar-row .pct{ width: 3.4ch; text-align: right; font-family: 'JetBrains Mono', monospace; }
+
+/* ---------- queue ---------- */
+.queue-display{ display: flex; align-items: baseline; gap: 0.6rem; }
+.queue-num{ font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; color: var(--accent2); font-variant-numeric: tabular-nums; }
+
+/* ---------- complaints ---------- */
+.complaint-box textarea{
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  border-radius: 8px;
+  padding: 0.7rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  min-height: 80px;
+  resize: vertical;
+}
+.complaint-result{
+  border-left: 3px solid var(--accent2);
+  padding-left: 0.8rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+  min-height: 1.4em;
+}
+
+/* ---------- excuses ---------- */
+.excuse-box{
+  border-left: 3px solid var(--accent);
+  padding-left: 0.9rem;
+  font-size: 0.92rem;
+  min-height: 1.4em;
+}
+
+/* confetti */
+.confetto{
+  position: fixed;
+  top: -20px;
+  width: 8px; height: 14px;
+  z-index: 500;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+@keyframes fall{
+  to{ transform: translateY(110vh) rotate(540deg); opacity: 0.8; }
+}
+</style>
+
+<div class="ticker-bar mono">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<div id="toastHost"></div>
+
+<div id="regGate">
+  <div class="gate-card">
+    <h2>Регистрация обязательна</h2>
+    <p class="lede">Для доступа к бесполезному контенту необходимо зарегистрироваться. Это займёт одну минуту и ни к чему не приведёт.</p>
+    <form id="regForm">
+      <div class="gate-field">
+        <label for="regNick">Никнейм</label>
+        <input type="text" id="regNick" autocomplete="off">
+      </div>
+      <div class="gate-field">
+        <label for="regFirst">Имя</label>
+        <input type="text" id="regFirst" autocomplete="off">
+      </div>
+      <div class="gate-field">
+        <label for="regLast">Фамилия</label>
+        <input type="text" id="regLast" autocomplete="off">
+      </div>
+      <button class="btn" type="submit" style="width:100%;">Зарегистрироваться</button>
+    </form>
+    <div class="gate-status" id="regStatus">&nbsp;</div>
+    <div class="gate-attempts" id="regAttemptsLine">Попытка 0 из 2</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="seal" id="seal" title="Это не кнопка. Или кнопка?">🏛️</div>
+    <h1>Министерство Бесполезности</h1>
+    <p>Официальный портал объекта №000‑ХАОС. Работаем над тем, чтобы ничего не работало, с 2026&nbsp;года. Все показатели ниже предоставлены самим собой и не проверялись никем.</p>
+    <span class="stamp">ПОЛЬЗЫ НЕ ОБНАРУЖЕНО</span>
+  </header>
+
+  <!-- Dept 1: useless counter -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Отдел учёта пользы</h2>
+      <span class="dept-id mono">ОТДЕЛ 01 / ФОРМА Б‑0</span>
+    </div>
+    <p class="lede">Нажмите кнопку, чтобы добавить единицу пользы в государственный реестр. Гарантии зачисления не предоставляются.</p>
+    <div class="counter-row">
+      <div class="counter-value mono" id="counterVal">0</div>
+      <button class="btn" id="counterBtn">+1 польза</button>
+    </div>
+    <div class="counter-msg mono" id="counterMsg">&nbsp;</div>
+  </section>
+
+  <!-- Dept 2: fleeing button -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Служба добровольного согласия</h2>
+      <span class="dept-id mono">ОТДЕЛ 02 / ФОРМА С‑9</span>
+    </div>
+    <p class="lede">Нажмите «Согласен», чтобы подтвердить своё согласие на что‑либо. Кнопка обучена избегать контакта.</p>
+    <div class="flee-stage" id="fleeStage">
+      <button class="btn" id="fleeBtn">Согласен</button>
+    </div>
+    <span class="flee-caption">Попыток поймать: <span id="fleeAttempts" class="mono">0</span></span>
+  </section>
+
+  <!-- Dept 3: do not press -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Отдел критической инфраструктуры</h2>
+      <span class="dept-id mono">ОТДЕЛ 03 / ДОПУСК НЕ ТРЕБУЕТСЯ</span>
+    </div>
+    <p class="lede">Эта кнопка управляет чем‑то важным. Мы не уточняем, чем именно. Настоятельно рекомендуем не нажимать.</p>
+    <button class="btn danger" id="dangerBtn">НЕ НАЖИМАТЬ</button>
+  </section>
+
+  <!-- Dept 4: loading bar -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Отдел смысла жизни</h2>
+      <span class="dept-id mono">ОТДЕЛ 04 / В ОБРАБОТКЕ</span>
+    </div>
+    <p class="lede">Загрузка смысла жизни запущена автоматически и не может быть отменена. Ожидайте.</p>
+    <div class="load-label">
+      <span id="loadStatus">Инициализация...</span>
+      <span class="mono" id="loadPct">2%</span>
+    </div>
+    <div class="load-track"><div class="load-fill" id="loadFill"></div></div>
+  </section>
+
+  <!-- Dept 5: subscribe wizard -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Отдел добровольной подписки</h2>
+      <span class="dept-id mono">ОТДЕЛ 05 / 5 ШАГОВ</span>
+    </div>
+    <p class="lede">Подпишитесь на рассылку, которой не существует. Процесс состоит из пяти простых шагов.</p>
+
+    <form id="wizardForm">
+      <div class="wizard-step" id="step1" data-step="1">
+        <div class="field">
+          <label for="wizEmail">Электронная почта</label>
+          <input type="email" id="wizEmail" placeholder="вы@нигде.рф" required>
+        </div>
+        <button class="btn" type="submit">Подписаться</button>
+      </div>
+
+      <div class="wizard-step" id="step2" data-step="2" hidden>
+        <label class="check-row"><input type="checkbox" id="wizConsent" required> Я не против получать письма ни о чём</label>
+        <button class="btn" type="button" data-next="3">Далее</button>
+      </div>
+
+      <div class="wizard-step" id="step3" data-step="3" hidden>
+        <p class="lede">Выберите все изображения, содержащие смысл жизни.</p>
+        <div class="captcha-grid" id="captchaGrid"></div>
+        <button class="btn" type="button" data-next="4">Готово</button>
+      </div>
+
+      <div class="wizard-step" id="step4" data-step="4" hidden>
+        <p class="lede">Вы точно уверены? Спрашиваем в последний раз. Вероятно.</p>
+        <div class="wizard-foot">
+          <button class="btn" type="button" data-next="5">Да, точно</button>
+          <button class="btn secondary" type="button" data-next="5">Нет, но всё равно да</button>
+        </div>
+      </div>
+
+      <div class="wizard-step" id="step5" data-step="5" hidden>
+        <p class="lede" id="wizResult">Подписка оформлена!</p>
+      </div>
+    </form>
+
+    <div class="step-dots" id="stepDots">● ○ ○ ○ ○</div>
+  </section>
+
+  <!-- Dept 6: diagnostics -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Отдел самодиагностики</h2>
+      <span class="dept-id mono">ОТДЕЛ 06 / АВТОПРОВЕРКА</span>
+    </div>
+    <p class="lede">Запустите проверку систем сайта. Результат известен заранее, но мы всё равно всё проверим по инструкции.</p>
+    <button class="btn secondary" id="diagBtn">Запустить диагностику</button>
+    <div class="diag-list" id="diagList"></div>
+  </section>
+
+  <!-- Dept 7: certificate -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Отдел наград и сертификатов</h2>
+      <span class="dept-id mono">ОТДЕЛ 07 / ГОСЗНАК НЕ ТРЕБУЕТСЯ</span>
+    </div>
+    <p class="lede">Получите официальный неофициальный сертификат за выдающееся бездействие.</p>
+    <button class="btn" id="certBtn">Выдать сертификат</button>
+    <div id="certHolder"></div>
+  </section>
+
+  <!-- Dept 8: poll -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Отдел всенародного голосования</h2>
+      <span class="dept-id mono">ОТДЕЛ 08 / ЯВКА НЕ ВАЖНА</span>
+    </div>
+    <p class="lede">Нужен ли этому сайту смысл? Ваш голос важен и ни на что не повлияет.</p>
+    <div class="poll-opts" id="pollOpts">
+      <button type="button" data-opt="Да">Да</button>
+      <button type="button" data-opt="Нет">Нет</button>
+      <button type="button" data-opt="Может быть">Может быть</button>
+    </div>
+    <div class="poll-results" id="pollResults" hidden></div>
+  </section>
+
+  <!-- Dept 9: queue -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Отдел живой очереди</h2>
+      <span class="dept-id mono">ОТДЕЛ 09 / ОКНО №0</span>
+    </div>
+    <p class="lede">Проверьте своё место в очереди за пользой. Очередь обновляется честно и в случайном направлении.</p>
+    <div class="queue-display">
+      <span>Ваш номер:</span>
+      <span class="queue-num mono" id="queueNum">4</span>
+    </div>
+    <button class="btn secondary" id="queueBtn">Обновить статус</button>
+    <div class="counter-msg mono" id="queueMsg">&nbsp;</div>
+  </section>
+
+  <!-- Dept 10: complaints -->
+  <section class="dept complaint-box">
+    <div class="dept-head">
+      <h2>Книга жалоб и предложений</h2>
+      <span class="dept-id mono">ОТДЕЛ 10 / ЖУРНАЛ №∞</span>
+    </div>
+    <p class="lede">Опишите проблему. Мы внимательно перемешаем каждое ваше слово перед обработкой.</p>
+    <textarea id="complaintText" placeholder="Например: на сайте ничего не работает"></textarea>
+    <button class="btn secondary" id="complaintBtn">Отправить жалобу</button>
+    <div class="complaint-result" id="complaintResult"></div>
+  </section>
+
+  <!-- Dept 11: excuses -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Отдел официальных оправданий</h2>
+      <span class="dept-id mono">ОТДЕЛ 11 / ШАБЛОН №7</span>
+    </div>
+    <p class="lede">Нужна причина, почему что-то не работает? Мы подготовили заготовки заранее.</p>
+    <button class="btn secondary" id="excuseBtn">Сгенерировать оправдание</button>
+    <p class="excuse-box" id="excuseBox">«Это не баг, а скрытая особенность.»</p>
+  </section>
+
+  <!-- Dept 12: achievements -->
+  <section class="dept">
+    <div class="dept-head">
+      <h2>Доска почёта</h2>
+      <span class="dept-id mono">ОТДЕЛ 12 / <span id="achCount">0</span>/12</span>
+    </div>
+    <p class="lede">Награды за бессмысленные действия на этом сайте. Хранятся только в этой вкладке.</p>
+    <div class="ach-grid" id="achGrid"></div>
+  </section>
+
+  <footer class="endzone">
+    <div>— конец интернета —</div>
+    <div id="endMsg">Дальше ничего нет. Можете листать вверх, это тоже ничего не изменит.</div>
+  </footer>
+</div>
+
+<div id="cookieBar" class="hidden-bar">
+  <p>Мы используем печеньки, чтобы ничего не запоминать. Настройка печенек недоступна.</p>
+  <div class="row">
+    <button class="btn" id="cookieAccept">Принять</button>
+    <button class="btn secondary" id="cookieConfig">Настроить</button>
+  </div>
+</div>
+
+<button id="chatToggle" aria-label="Открыть поддержку">💬</button>
+<div id="chatPanel" class="hidden-bar">
+  <div class="chat-head">
+    <span>Служба (не)поддержки</span>
+    <button class="btn secondary" id="chatClose" style="padding:0.2rem 0.6rem;">×</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-foot">
+    <input type="text" id="chatInput" placeholder="Напишите что угодно...">
+    <button id="chatSend">→</button>
+  </div>
+</div>
+
+<div id="secretModal">
+  <div class="secret-card">
+    <div style="font-size:2rem;">🥚</div>
+    <h3>Секретный отдел найден</h3>
+    <p class="lede">Поздравляем. Вы потратили пять кликов, чтобы попасть сюда. Это была вся пасхалка. Можете гордиться собой.</p>
+    <button class="btn" id="secretClose">Закрыть и забыть</button>
+  </div>
+</div>
+
+<div id="warnOverlay">
+  <div class="warn-inner">
+    <div class="big glitching" id="warnBig">⚠ СИСТЕМА НАРУШЕНА ⚠</div>
+    <div class="mono" id="warnText">инициализация протокола последствий...</div>
+    <button class="btn" id="warnClose" style="display:none;">Понятно, это шутка</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- toast ----------
+  function toast(msg){
+    var host = document.getElementById('toastHost');
+    var el = document.createElement('div');
+    el.className = 'toast mono';
+    el.textContent = msg;
+    host.appendChild(el);
+    setTimeout(function(){
+      el.style.transition = 'opacity 0.3s ease';
+      el.style.opacity = '0';
+      setTimeout(function(){ el.remove(); }, 300);
+    }, 3200);
+  }
+
+  // ---------- achievements ----------
+  var ACH = [
+    { id:'first', icon:'👆', name:'Первый клик', desc:'Нажали хоть что-то' },
+    { id:'curious', icon:'💀', name:'Любопытство наказуемо', desc:'Нажали «НЕ НАЖИМАТЬ»' },
+    { id:'hunter', icon:'🏃', name:'Почти поймал', desc:'Сделали 10 попыток поймать кнопку' },
+    { id:'subscriber', icon:'📨', name:'Отменённый подписчик', desc:'Прошли все 5 шагов подписки' },
+    { id:'patient', icon:'⏳', name:'Терпение на нуле', desc:'Наблюдали за загрузкой 20 секунд' },
+    { id:'cookie', icon:'🍪', name:'Печенькоборец', desc:'Закрыли баннер 5 раз' },
+    { id:'secret', icon:'🥚', name:'Секрет найден', desc:'Нашли пасхалку в гербе' },
+    { id:'end', icon:'🏁', name:'Конец интернета', desc:'Долистали до самого низа' },
+    { id:'noreg', icon:'🚪', name:'Прошёл без регистрации', desc:'Провалили регистрацию дважды' },
+    { id:'cert', icon:'📜', name:'Магистр бездействия', desc:'Получили сертификат' },
+    { id:'vote', icon:'🗳️', name:'Голос не услышан', desc:'Проголосовали в опросе' },
+    { id:'queue', icon:'🎫', name:'Вечно четвёртый', desc:'Проверили очередь 5 раз' }
+  ];
+  var unlocked = {};
+
+  function renderAch(){
+    var grid = document.getElementById('achGrid');
+    grid.innerHTML = '';
+    var count = 0;
+    ACH.forEach(function(a){
+      var on = !!unlocked[a.id];
+      if(on) count++;
+      var div = document.createElement('div');
+      div.className = 'ach' + (on ? ' unlocked' : '');
+      div.innerHTML = '<span class="ic">' + (on ? a.icon : '🔒') + '</span>' +
+        '<span class="name">' + a.name + '</span>' +
+        '<span class="desc">' + a.desc + '</span>';
+      grid.appendChild(div);
+    });
+    document.getElementById('achCount').textContent = count;
+  }
+  function unlock(id){
+    if(unlocked[id]) return;
+    unlocked[id] = true;
+    var a = ACH.find(function(x){ return x.id === id; });
+    if(a) toast('🏆 Награда: «' + a.name + '»');
+    renderAch();
+  }
+  renderAch();
+
+  var firstClickDone = false;
+  document.addEventListener('click', function(){
+    if(!firstClickDone){ firstClickDone = true; unlock('first'); }
+  }, { once: false, capture: true });
+
+  // ---------- ticker ----------
+  var stats = [
+    'ЭФФЕКТИВНОСТЬ: −14%',
+    'ПОЛЬЗЫ ПРОИЗВЕДЕНО: 0 ЕД.',
+    'УРОВЕНЬ ХАОСА: 146%',
+    'БЮДЖЕТ ОСВОЕН: ДА',
+    'РЕЗУЛЬТАТ: НЕ ПРИМЕНИМО',
+    'ОТВЕТСТВЕННЫЙ: НЕ НАЗНАЧЕН',
+    'СТАТУС САЙТА: ФУНКЦИОНИРУЕТ ВИЗУАЛЬНО',
+    'СЕРТИФИКАТОВ ВЫДАНО: 0 ЗНАЧИМЫХ',
+    'ОЧЕРЕДЬ: РАСТЁТ'
+  ];
+  var track = document.getElementById('tickerTrack');
+  var html = stats.map(function(s){ return '<span>' + s + '</span>'; }).join('<span>•</span>');
+  track.innerHTML = html + '<span>•</span>' + html;
+
+  // ---------- Dept 1: counter ----------
+  var counterVal = document.getElementById('counterVal');
+  var counterMsg = document.getElementById('counterMsg');
+  var counterMessages = [
+    'Польза аннулирована комиссией.',
+    'Единица пользы утеряна при пересылке.',
+    'Эффект отменён задним числом.',
+    'Эта польза не прошла проверку.',
+    '0, как и было до вас.',
+    'Система не засчитывает это действие.'
+  ];
+  document.getElementById('counterBtn').addEventListener('click', function(){
+    counterVal.textContent = '1';
+    setTimeout(function(){
+      counterVal.textContent = '0';
+      counterMsg.textContent = counterMessages[Math.floor(Math.random()*counterMessages.length)];
+    }, 400);
+  });
+
+  // ---------- Dept 2: fleeing button ----------
+  var fleeBtn = document.getElementById('fleeBtn');
+  var fleeStage = document.getElementById('fleeStage');
+  var attempts = 0;
+  var attemptsEl = document.getElementById('fleeAttempts');
+  function fleeAway(){
+    var stageRect = fleeStage.getBoundingClientRect();
+    var btnW = fleeBtn.offsetWidth, btnH = fleeBtn.offsetHeight;
+    var maxX = Math.max(stageRect.width - btnW - 10, 10);
+    var maxY = Math.max(stageRect.height - btnH - 10, 10);
+    var x = 10 + Math.random() * maxX;
+    var y = 10 + Math.random() * maxY;
+    fleeBtn.style.left = x + 'px';
+    fleeBtn.style.top = y + 'px';
+    fleeBtn.style.transform = 'none';
+  }
+  fleeBtn.addEventListener('mouseenter', function(){
+    attempts++;
+    attemptsEl.textContent = attempts;
+    fleeAway();
+    if(attempts >= 10) unlock('hunter');
+  });
+  fleeBtn.addEventListener('touchstart', function(e){
+    e.preventDefault();
+    attempts++;
+    attemptsEl.textContent = attempts;
+    fleeAway();
+    if(attempts >= 10) unlock('hunter');
+  }, { passive:false });
+  fleeBtn.addEventListener('click', function(){
+    toast('Согласие зафиксировано. (Не очень честно.)');
+  });
+
+  // ---------- Dept 3: danger button ----------
+  var warnOverlay = document.getElementById('warnOverlay');
+  var warnText = document.getElementById('warnText');
+  var warnClose = document.getElementById('warnClose');
+  var confettiColors = ['#c6ff3d','#ff2fb0','#ffcf3f','#f4ecff'];
+  function burstConfetti(){
+    for(var i=0;i<28;i++){
+      var c = document.createElement('div');
+      c.className = 'confetto';
+      c.style.left = (Math.random()*100) + 'vw';
+      c.style.background = confettiColors[i % confettiColors.length];
+      c.style.animationDuration = (2 + Math.random()*1.5) + 's';
+      document.body.appendChild(c);
+      (function(node){ setTimeout(function(){ node.remove(); }, 4000); })(c);
+    }
+  }
+  document.getElementById('dangerBtn').addEventListener('click', function(){
+    unlock('curious');
+    warnOverlay.classList.add('show');
+    warnText.textContent = 'инициализация протокола последствий...';
+    warnClose.style.display = 'none';
+    setTimeout(function(){
+      warnText.textContent = 'Шутка. Ничего не нарушено. Но мы запомнили, что вы нажали.';
+      warnClose.style.display = 'inline-flex';
+      burstConfetti();
+    }, 1600);
+  });
+  warnClose.addEventListener('click', function(){
+    warnOverlay.classList.remove('show');
+  });
+
+  // ---------- Dept 4: loading ----------
+  var loadFill = document.getElementById('loadFill');
+  var loadPct = document.getElementById('loadPct');
+  var loadStatus = document.getElementById('loadStatus');
+  var statuses = ['Инициализация...','Почти готово...','Докручиваем прогресс-бар...','Ищем смысл в соседнем отделе...','Ещё чуть-чуть, честно...','Пересчитываем проценты...'];
+  var pct = 2, ticks = 0, patientGiven = false;
+  setInterval(function(){
+    ticks++;
+    if(pct < 99){
+      pct += Math.max(0.4, (99-pct) * 0.08);
+      if(pct > 99) pct = 99;
+    } else {
+      pct = 98.6 + Math.random()*0.8;
+    }
+    loadFill.style.width = pct.toFixed(1) + '%';
+    loadPct.textContent = pct.toFixed(1) + '%';
+    if(ticks % 4 === 0){
+      loadStatus.textContent = statuses[Math.floor(Math.random()*statuses.length)];
+    }
+    if(ticks >= 50 && !patientGiven){
+      patientGiven = true;
+      unlock('patient');
+    }
+  }, 400);
+
+  // ---------- Dept 5: wizard ----------
+  var wizardForm = document.getElementById('wizardForm');
+  var dots = document.getElementById('stepDots');
+  function showStep(n){
+    for(var i=1;i<=5;i++){
+      document.getElementById('step'+i).hidden = (i !== n);
+    }
+    var d = [];
+    for(var j=1;j<=5;j++){ d.push(j===n ? '●' : '○'); }
+    dots.textContent = d.join(' ');
+  }
+  wizardForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    showStep(2);
+  });
+  wizardForm.querySelectorAll('[data-next]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var next = parseInt(btn.getAttribute('data-next'), 10);
+      showStep(next);
+      if(next === 5){
+        unlock('subscriber');
+        var result = document.getElementById('wizResult');
+        result.textContent = 'Подписка оформлена!';
+        setTimeout(function(){
+          result.textContent = 'Ой. Подписка отменилась сама собой.';
+          setTimeout(function(){
+            wizardForm.reset();
+            document.querySelectorAll('#captchaGrid button').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+            showStep(1);
+          }, 1800);
+        }, 1500);
+      }
+    });
+  });
+  var captchaEmoji = ['🌀','🪨','☁️','🧦','🥔','9'];
+  var grid = document.getElementById('captchaGrid');
+  captchaEmoji.forEach(function(e){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = e;
+    b.setAttribute('aria-pressed','false');
+    b.addEventListener('click', function(){
+      var on = b.getAttribute('aria-pressed') === 'true';
+      b.setAttribute('aria-pressed', on ? 'false' : 'true');
+    });
+    grid.appendChild(b);
+  });
+  showStep(1);
+
+  // ---------- registration gate ----------
+  var regForm = document.getElementById('regForm');
+  var regStatus = document.getElementById('regStatus');
+  var regAttemptsLine = document.getElementById('regAttemptsLine');
+  var regGate = document.getElementById('regGate');
+  var regAttempts = 0;
+  document.body.style.overflow = 'hidden';
+
+  var letterCanvas = document.createElement('canvas');
+  var letterCtx = letterCanvas.getContext('2d');
+
+  function spawnFallingLetters(inputEl){
+    var text = inputEl.value;
+    if(!text){ return; }
+    var rect = inputEl.getBoundingClientRect();
+    var style = getComputedStyle(inputEl);
+    letterCtx.font = style.fontStyle + ' ' + style.fontWeight + ' ' + style.fontSize + ' ' + style.fontFamily;
+    var paddingLeft = parseFloat(style.paddingLeft) || 0;
+    var x = rect.left + paddingLeft;
+    var top = rect.top + (rect.height - parseFloat(style.fontSize)) / 2;
+    for(var i = 0; i < text.length; i++){
+      var ch = text[i];
+      var w = letterCtx.measureText(ch).width || 8;
+      (function(ch, startX, startTop, idx){
+        var span = document.createElement('span');
+        span.className = 'falling-letter';
+        span.textContent = ch;
+        span.style.left = startX + 'px';
+        span.style.top = startTop + 'px';
+        span.style.fontSize = style.fontSize;
+        span.style.fontFamily = style.fontFamily;
+        span.style.color = '#f4ecff';
+        document.body.appendChild(span);
+        var dx = (Math.random() * 90 - 45).toFixed(0) + 'px';
+        var rot = (Math.random() * 420 - 210).toFixed(0) + 'deg';
+        var dur = (0.8 + Math.random() * 0.6);
+        var delay = idx * 0.03;
+        span.style.transition = 'transform ' + dur + 's cubic-bezier(.55,0,1,.45) ' + delay + 's, opacity ' + dur + 's ease ' + delay + 's';
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){
+            span.style.transform = 'translate(' + dx + ', 60vh) rotate(' + rot + ')';
+            span.style.opacity = '0.12';
+          });
+        });
+        setTimeout(function(){ span.remove(); }, (delay + dur) * 1000 + 150);
+      })(ch, x, top, i);
+      x += w;
+    }
+    inputEl.value = '';
+  }
+
+  regForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    regAttempts++;
+    [document.getElementById('regNick'), document.getElementById('regFirst'), document.getElementById('regLast')]
+      .forEach(spawnFallingLetters);
+    if(regAttempts < 2){
+      regStatus.textContent = 'Буквы не удержались и рассыпались. Попробуйте ещё раз.';
+      regAttemptsLine.textContent = 'Попытка ' + regAttempts + ' из 2';
+    } else {
+      regAttemptsLine.textContent = 'Попытка 2 из 2';
+      regStatus.textContent = 'Всё, хватит. Иди без регистрации.';
+      regForm.querySelector('button').disabled = true;
+      unlock('noreg');
+      setTimeout(function(){
+        regGate.classList.add('gate-hidden');
+        document.body.style.overflow = '';
+        toast('Добро пожаловать. Регистрация официально провалена.');
+      }, 1500);
+    }
+  });
+
+  // ---------- Dept 6: diagnostics ----------
+  var diagBtn = document.getElementById('diagBtn');
+  var diagList = document.getElementById('diagList');
+  var diagChecks = [
+    'Проверка смысла существования сайта',
+    'Проверка соединения с реальностью',
+    'Сканирование на наличие пользы',
+    'Проверка уровня сарказма',
+    'Тест на прочность терпения пользователя',
+    'Финальная сверка бюджета'
+  ];
+  diagBtn.addEventListener('click', function(){
+    diagList.innerHTML = '';
+    diagChecks.forEach(function(label, i){
+      setTimeout(function(){
+        var row = document.createElement('div');
+        row.className = 'diag-line';
+        var failed = Math.random() > 0.15;
+        row.innerHTML = '<span>' + label + '</span><span class="' + (failed ? 'fail' : 'ok') + '">' + (failed ? 'НЕ ПРОЙДЕНО' : 'ПРОЙДЕНО') + '</span>';
+        diagList.appendChild(row);
+        if(i === diagChecks.length - 1){
+          setTimeout(function(){
+            var final = document.createElement('div');
+            final.className = 'diag-line';
+            final.innerHTML = '<span>Общий результат</span><span class="fail">ПОЛЬЗА НЕ ОБНАРУЖЕНА</span>';
+            diagList.appendChild(final);
+          }, 350);
+        }
+      }, i * 350);
+    });
+  });
+
+  // ---------- Dept 7: certificate ----------
+  var certTitles = [
+    'Магистр прокрастинации',
+    'Почётный бездельник года',
+    'Доктор пустых обещаний',
+    'Заслуженный наблюдатель прогресс-баров',
+    'Кандидат наук по кликанью кнопок',
+    'Хранитель нулевого счётчика'
+  ];
+  document.getElementById('certBtn').addEventListener('click', function(){
+    unlock('cert');
+    var title = certTitles[Math.floor(Math.random() * certTitles.length)];
+    var serial = '№ ' + Math.floor(1000 + Math.random() * 8999) + '-ХАОС';
+    document.getElementById('certHolder').innerHTML =
+      '<div class="cert-card"><div style="font-size:1.6rem;">🏅</div><div class="cert-title">' + title + '</div>' +
+      '<div>настоящим подтверждается, что предъявитель не достиг ровным счётом ничего</div>' +
+      '<div class="cert-serial mono">' + serial + '</div></div>';
+  });
+
+  // ---------- Dept 8: poll ----------
+  function pollRow(label, pct){
+    return '<div class="poll-bar-row"><span class="label">' + label + '</span>' +
+      '<span class="poll-bar-track"><span class="poll-bar-fill" style="width:' + pct + '%"></span></span>' +
+      '<span class="pct mono">' + pct + '%</span></div>';
+  }
+  document.querySelectorAll('#pollOpts button').forEach(function(b){
+    b.addEventListener('click', function(){
+      unlock('vote');
+      var r1 = 38 + Math.floor(Math.random() * 8);
+      var r2 = 38 + Math.floor(Math.random() * 8);
+      var r3 = 38 + Math.floor(Math.random() * 8);
+      var results = document.getElementById('pollResults');
+      results.hidden = false;
+      results.innerHTML = pollRow('Да', r1) + pollRow('Нет', r2) + pollRow('Может быть', r3) +
+        '<div class="counter-msg mono">Ничья. Как всегда. (' + (r1 + r2 + r3) + '% от ста возможных)</div>';
+    });
+  });
+
+  // ---------- Dept 9: queue ----------
+  var queueNum = document.getElementById('queueNum');
+  var queueMsg = document.getElementById('queueMsg');
+  var queueClicks = 0;
+  var queueTexts = [
+    'Перед вами снова больше людей, чем было.',
+    'Очередь обновлена. Вы всё ещё не первый.',
+    'Система пересчитала очередь не в вашу пользу.',
+    'Кто-то прошёл без очереди. Как обычно.',
+    'Ваше место временно не определено.'
+  ];
+  document.getElementById('queueBtn').addEventListener('click', function(){
+    queueClicks++;
+    var nums = [4,5,6,7,8,9,11];
+    queueNum.textContent = nums[Math.floor(Math.random() * nums.length)];
+    queueMsg.textContent = queueTexts[Math.floor(Math.random() * queueTexts.length)];
+    if(queueClicks >= 5) unlock('queue');
+  });
+
+  // ---------- Dept 10: complaints ----------
+  document.getElementById('complaintBtn').addEventListener('click', function(){
+    var text = document.getElementById('complaintText').value.trim();
+    var result = document.getElementById('complaintResult');
+    if(!text){
+      result.textContent = 'Жалоба пуста, но мы всё равно её не прочитаем.';
+      return;
+    }
+    var words = text.split(/\s+/);
+    for(var i = words.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = words[i]; words[i] = words[j]; words[j] = tmp;
+    }
+    result.textContent = 'Ваша жалоба принята в следующей редакции: «' + words.join(' ') + '». Статус: отправлено в чёрную дыру.';
+    document.getElementById('complaintText').value = '';
+  });
+
+  // ---------- Dept 11: excuses ----------
+  var excuses = [
+    '«Это не баг, а скрытая особенность.»',
+    '«Проблема на вашей стороне интернета.»',
+    '«Мы уже знаем и уже не чиним.»',
+    '«Так и было задумано изначально.»',
+    '«Ответственный за это уже уволился.»',
+    '«Это временно. С 2026 года.»',
+    '«Функционал переехал в отдел, которого нет.»',
+    '«Заявка принята и потеряна.»'
+  ];
+  document.getElementById('excuseBtn').addEventListener('click', function(){
+    document.getElementById('excuseBox').textContent = excuses[Math.floor(Math.random() * excuses.length)];
+  });
+
+  // ---------- cookie banner loop ----------
+  var cookieBar = document.getElementById('cookieBar');
+  var cookieDismissals = 0;
+  function showCookie(){ cookieBar.classList.remove('hidden-bar'); }
+  function dismissCookie(msg){
+    cookieBar.classList.add('hidden-bar');
+    cookieDismissals++;
+    toast(msg);
+    if(cookieDismissals >= 5) unlock('cookie');
+    setTimeout(showCookie, 3200);
+  }
+  document.getElementById('cookieAccept').addEventListener('click', function(){
+    dismissCookie('Печеньки приняты. Это ничего не меняет.');
+  });
+  document.getElementById('cookieConfig').addEventListener('click', function(){
+    dismissCookie('Настройки печенек недоступны по техническим причинам.');
+  });
+  setTimeout(showCookie, 2000);
+
+  // ---------- chat ----------
+  var chatToggle = document.getElementById('chatToggle');
+  var chatPanel = document.getElementById('chatPanel');
+  var chatBody = document.getElementById('chatBody');
+  var chatInput = document.getElementById('chatInput');
+  var botReplies = [
+    'Пользователь прав, но мы всё равно ничего не сделаем.',
+    'Ваше обращение зарегистрировано под номером 0.',
+    'Попробуйте выключить и включить себя.',
+    'Этот вопрос передан в отдел, которого не существует.',
+    'Мы ценим ваше терпение. Больше ничего мы не ценим.',
+    'Спасибо, ваша проблема теперь и наша тоже. Мы её тоже игнорируем.',
+    'Для продолжения, пожалуйста, перечитайте этот ответ.'
+  ];
+  function addMsg(text, who){
+    var d = document.createElement('div');
+    d.className = 'chat-msg ' + who;
+    d.textContent = text;
+    chatBody.appendChild(d);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+  var chatOpened = false;
+  chatToggle.addEventListener('click', function(){
+    chatPanel.classList.toggle('hidden-bar');
+    if(!chatOpened && !chatPanel.classList.contains('hidden-bar')){
+      chatOpened = true;
+      addMsg('Здравствуйте! Мы не поможем, но готовы выслушать.', 'bot');
+    }
+  });
+  document.getElementById('chatClose').addEventListener('click', function(){
+    chatPanel.classList.add('hidden-bar');
+  });
+  function sendChat(){
+    var val = chatInput.value.trim();
+    if(!val) return;
+    addMsg(val, 'user');
+    chatInput.value = '';
+    setTimeout(function(){
+      addMsg(botReplies[Math.floor(Math.random()*botReplies.length)], 'bot');
+    }, 650);
+  }
+  document.getElementById('chatSend').addEventListener('click', sendChat);
+  chatInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') sendChat();
+  });
+
+  // ---------- secret seal ----------
+  var seal = document.getElementById('seal');
+  var sealClicks = 0;
+  seal.addEventListener('click', function(){
+    sealClicks++;
+    if(sealClicks >= 5){
+      document.getElementById('secretModal').classList.add('show');
+      unlock('secret');
+      sealClicks = 0;
+    } else {
+      toast('Герб дрогнул. (' + sealClicks + '/5)');
+    }
+  });
+  document.getElementById('secretClose').addEventListener('click', function(){
+    document.getElementById('secretModal').classList.remove('show');
+  });
+
+  // ---------- end of internet ----------
+  var endMsg = document.getElementById('endMsg');
+  var endDone = false;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting && !endDone){
+        endDone = true;
+        unlock('end');
+        endMsg.textContent = 'Поздравляем. Вы дочитали страницу, которая ничего не делала, до самого конца.';
+        burstConfetti();
+      }
+    });
+  }, { threshold: 0.6 });
+  io.observe(document.querySelector('footer.endzone'));
+
+  // random ambient toast
+  var ambient = [
+    'Кто-то из Нижнего Новгорода только что ничего не купил.',
+    'Сервер вздохнул, но устоял.',
+    'Статистика обновлена. Она не изменилась.',
+    'Отдел контроля качества ушёл на обед.'
+  ];
+  setTimeout(function(){
+    toast(ambient[Math.floor(Math.random()*ambient.length)]);
+  }, 9000);
+})();
+</script>
+
+</body></html>
